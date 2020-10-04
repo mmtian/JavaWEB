@@ -11,9 +11,9 @@
         (6) Tomcat服务器根据response对象构建响应消息，返回给浏览器
 ## 2. Request继承关系
     ServletRequest		--  接口
-    		|继承
+        |继承
     HttpServletRequest	--  接口
-    		|实现
+        |实现
     org.apache.catalina.connector.RequestFacade -- 类(tomcat)
 ## 3. Request功能
 ### 3.1 获取请求消息数据
@@ -65,4 +65,21 @@
                 * 解决：在获取参数前，设置request的编码request.setCharacterEncoding("utf-8");
     
     2. 请求转发
+        1. 转发步骤：
+            获取请求转发器： RequestDispatcher getRequestDispatcher(String path)
+            使用转发器对象进行转发： forward(ServletRequest request, ServletResponse response) 
+            
+        2. 特点
+            * 浏览器地址栏不发生变化
+            * 只能转发到服务器内部的资源
+            * 浏览器只发出一次请求
+            
+    3. 共享数据：
+        * 域对象：一个有作用范围的对象，可以在范围内共享数据
+        * request域：代表一次请求的范围，一般用于请求转发的多个资源中共享数据
+        * 方法：
+            1. void setAttribute(String name,Object obj):存储数据
+            2. Object getAttitude(String name):通过键获取值
+            3. void removeAttribute(String name):通过键移除键值对
         
+    4. 
