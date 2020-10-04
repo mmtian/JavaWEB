@@ -1,1 +1,2 @@
 # JavaWEB
+本项目用于记录学习JavaWEB的过程
