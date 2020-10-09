@@ -1,20 +1,24 @@
-package live.nobug.cookie;
+package live.nobug.web.servlet;
+
+import live.nobug.domain.User;
+import live.nobug.service.UserService;
+import live.nobug.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet("/cookieDemo01")
-public class CookieDemo01 extends HttpServlet {
+@WebServlet("/userListServlet")
+public class UserListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 创建Cookie对象
-        Cookie cookie = new Cookie("msg", "hellohhhhh");
-        // 绑定Cookie对象
-        response.addCookie(cookie);
+        UserService service = new UserServiceImpl();
+        List<User> users = service.findAll();
+        request.setAttribute("users", users);
+        request.getRequestDispatcher("/list.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
