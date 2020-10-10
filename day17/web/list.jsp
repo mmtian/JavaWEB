@@ -60,8 +60,8 @@
         </form>
     </div>
     <div class="top-btn">
-        <a class="btn btn-primary" href="add.html">添加联系人</a>
-        <a class="btn btn-primary" href="add.html">删除选中</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/add.jsp">添加联系人</a>
+        <a class="btn btn-primary" href="add.jsp">删除选中</a>
     </div>
     <table border="1" class="table table-bordered table-hover">
         <tr class="success">
@@ -75,16 +75,16 @@
             <th>邮箱</th>
             <th>操作</th>
         </tr>
-        <c:forEach items="${requestScope.users}" var="user" varStatus="s">
+        <c:forEach items="${customers}" var="customer" varStatus="s">
             <tr>
                 <td><input type="checkbox"></td>
                 <td>${s.count}</td>
-                <td>${user.name}</td>
-                <td>${user.gender}</td>
-                <td>${user.age}</td>
-                <td>${user.address}</td>
-                <td>${user.qq}</td>
-                <td>${user.email}</td>
+                <td>${customer.name}</td>
+                <td>${customer.gender}</td>
+                <td>${customer.age}</td>
+                <td>${customer.address}</td>
+                <td>${customer.qq}</td>
+                <td>${customer.email}</td>
                 <td><a class="btn btn-default btn-sm" href="update.html">修改</a>&nbsp;<a class="btn btn-default btn-sm" href="">删除</a></td>
             </tr>
         </c:forEach>

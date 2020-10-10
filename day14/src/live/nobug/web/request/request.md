@@ -42,7 +42,7 @@
             * String getRemoteAddr()
 #### 3.1.2 获取请求头
     1. 获取单个请求头
-        String agent = request.getHeader("user-agent");
+        String agent = request.getHeader("customer-agent");
     3. 获取所有请求头名字
         Enumeration<String> names = request.getHeaderNames();
 #### 3.1.3 获取请求体(只适用于post请求)

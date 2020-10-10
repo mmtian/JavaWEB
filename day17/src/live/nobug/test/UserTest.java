@@ -5,8 +5,6 @@ import live.nobug.service.UserService;
 import live.nobug.service.impl.UserServiceImpl;
 import org.junit.Test;
 
-import java.util.List;
-
 public class UserTest {
     @Test
     public void test1(){
@@ -17,8 +15,6 @@ public class UserTest {
 
         User login = service.login(user);
         System.out.println(login);
-        System.out.println("==============");
-        List<User> users = service.findAll();
-        System.out.println(users);
+
     }
 }

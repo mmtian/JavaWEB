@@ -1,4 +1,4 @@
-<%@ page import="live.nobug.domain.User" %><%--
+<%@ page import="live.nobug.domain.Customer" %><%--
   Created by IntelliJ IDEA.
   User: tianmengmeng
   Date: 2020/10/7
@@ -12,8 +12,8 @@
 </head>
 <body>
     <%
-        User user = (User) session.getAttribute("user");
+        User customer = (User) session.getAttribute("customer");
     %>
-    <h1>登陆成功！<%= user.getUsername()%>，欢迎您！</h1>
+    <h1>登陆成功！<%= customer.getUsername()%>，欢迎您！</h1>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package live.nobug.web.servlet;
 
+import live.nobug.domain.Customer;
 import live.nobug.domain.User;
 import live.nobug.service.UserService;
 import live.nobug.service.impl.UserServiceImpl;

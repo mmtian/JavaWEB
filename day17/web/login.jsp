@@ -25,8 +25,8 @@
     <h3 style="text-align: center;">管理员登录</h3>
     <form action="${pageContext.request.contextPath}/loginServlet" method="post">
         <div class="form-group">
-            <label for="user">用户名：</label>
-            <input type="text" name="username" class="form-control" id="user" placeholder="请输入用户名"/>
+            <label for="customer">用户名：</label>
+            <input type="text" name="username" class="form-control" id="customer" placeholder="请输入用户名"/>
         </div>
 
         <div class="form-group">
