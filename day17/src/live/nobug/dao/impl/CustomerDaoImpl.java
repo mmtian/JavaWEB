@@ -24,4 +24,22 @@ public class CustomerDaoImpl implements CustomerDao {
         template.update(sql, customer.getName(), customer.getGender(), customer.getAge(), customer.getAddress(), customer.getQq(), customer.getEmail());
     }
 
+    @Override
+    public void deleteById(int id) {
+        String sql = "delete from customer where id = ?";
+        template.update(sql, id);
+    }
+
+    @Override
+    public Customer findById(int id) {
+        String sql = "select * from customer where id = ?";
+        return template.queryForObject(sql, new BeanPropertyRowMapper<>(Customer.class), id);
+    }
+
+    @Override
+    public void update(Customer customer) {
+        String sql = "update customer set name = ?, gender = ?, age = ?, address = ?, qq = ?, email = ? where id = ?";
+        template.update(sql, customer.getName(), customer.getGender(), customer.getAge(), customer.getAddress(), customer.getQq(), customer.getEmail(), customer.getId());
+    }
+
 }

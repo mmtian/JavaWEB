@@ -22,18 +22,28 @@
     <script src="js/jquery-2.1.0.min.js"></script>
     <!-- 3. 导入bootstrap的js文件 -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        function deleteById(id) {
+            if (confirm("您确定要删除吗？")) {
+                window.location = "${pageContext.request.contextPath}/deleteCustomer?id=" + id;
+            }
+        }
+    </script>
     <style type="text/css">
         td, th {
             text-align: center;
         }
-        .top-btn{
+
+        .top-btn {
             margin-bottom: 7px;
             float: right;
         }
-        .top-form{
+
+        .top-form {
             float: left;
         }
-        .label-pagination{
+
+        .label-pagination {
             font-size: 25px;
             margin-left: 10px;
         }
@@ -85,7 +95,10 @@
                 <td>${customer.address}</td>
                 <td>${customer.qq}</td>
                 <td>${customer.email}</td>
-                <td><a class="btn btn-default btn-sm" href="update.html">修改</a>&nbsp;<a class="btn btn-default btn-sm" href="">删除</a></td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/editCustomer?id=${customer.id}">修改</a>&nbsp;
+                    <a class="btn btn-default btn-sm" href="javascript:deleteById(${customer.id});">删除</a>
+                </td>
             </tr>
         </c:forEach>
 

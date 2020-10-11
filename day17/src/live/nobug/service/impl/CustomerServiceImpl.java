@@ -18,4 +18,19 @@ public class CustomerServiceImpl implements CustomerService {
     public void add(Customer customer) {
         dao.add(customer);
     }
+
+    @Override
+    public void deleteCustomerById(String id) {
+        dao.deleteById(Integer.parseInt(id));
+    }
+
+    @Override
+    public Customer findCustomerById(String id) {
+        return dao.findById(Integer.parseInt(id));
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        dao.update(customer);
+    }
 }
