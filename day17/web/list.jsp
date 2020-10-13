@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core_1_1" %>
 
 <!DOCTYPE html>
 <!-- 网页使用的语言 -->
@@ -26,6 +26,21 @@
         function deleteById(id) {
             if (confirm("您确定要删除吗？")) {
                 window.location = "${pageContext.request.contextPath}/deleteCustomer?id=" + id;
+            }
+        }
+
+        window.onload = function () {
+            document.getElementById("delSelected").onclick = function () {
+                if(confirm("您确定要删除选中的所有用户吗？")){
+                    document.getElementById("delForm").submit();
+                }
+            }
+
+            document.getElementById("header-checkbox").onclick = function (){
+                let ths = document.getElementsByName("uid");
+                for (let i = 0; i < ths.length; i++) {
+                    ths[i].checked = this.checked;
+                }
             }
         }
     </script>
@@ -71,38 +86,39 @@
     </div>
     <div class="top-btn">
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/add.jsp">添加联系人</a>
-        <a class="btn btn-primary" href="add.jsp">删除选中</a>
+        <a class="btn btn-primary" id="delSelected" href="javascript:void(0);">删除选中</a>
     </div>
-    <table border="1" class="table table-bordered table-hover">
-        <tr class="success">
-            <th><input type="checkbox"></th>
-            <th>编号</th>
-            <th>姓名</th>
-            <th>性别</th>
-            <th>年龄</th>
-            <th>籍贯</th>
-            <th>QQ</th>
-            <th>邮箱</th>
-            <th>操作</th>
-        </tr>
-        <c:forEach items="${customers}" var="customer" varStatus="s">
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>${s.count}</td>
-                <td>${customer.name}</td>
-                <td>${customer.gender}</td>
-                <td>${customer.age}</td>
-                <td>${customer.address}</td>
-                <td>${customer.qq}</td>
-                <td>${customer.email}</td>
-                <td>
-                    <a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/editCustomer?id=${customer.id}">修改</a>&nbsp;
-                    <a class="btn btn-default btn-sm" href="javascript:deleteById(${customer.id});">删除</a>
-                </td>
+    <form id="delForm" action="${pageContext.request.contextPath}/delSelectedCustomers" method="post">
+        <table border="1" class="table table-bordered table-hover">
+            <tr class="success">
+                <th><input id="header-checkbox" type="checkbox"></th>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>籍贯</th>
+                <th>QQ</th>
+                <th>邮箱</th>
+                <th>操作</th>
             </tr>
-        </c:forEach>
+            <c:forEach items="${customers}" var="customer" varStatus="s">
+                <tr>
+                    <td><input type="checkbox" name="uid" value="${customer.id}"></td>
+                    <td>${s.count}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.gender}</td>
+                    <td>${customer.age}</td>
+                    <td>${customer.address}</td>
+                    <td>${customer.qq}</td>
+                    <td>${customer.email}</td>
+                    <td>
+                        <a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/editCustomer?id=${customer.id}">修改</a>&nbsp;
+                        <a class="btn btn-default btn-sm" href="javascript:deleteById(${customer.id});">删除</a></td>
+                </tr>
+            </c:forEach>
 
-    </table>
+        </table>
+    </form>
     <div>
         <nav aria-label="Page navigation">
             <ul class="pagination">

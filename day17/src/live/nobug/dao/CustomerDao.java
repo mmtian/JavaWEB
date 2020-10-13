@@ -14,4 +14,8 @@ public interface CustomerDao {
     Customer findById(int id);
 
     void update(Customer customer);
+
+    int totalCount();
+
+    List<Customer> findByPage(int startIndex, int rowsPerPage);
 }

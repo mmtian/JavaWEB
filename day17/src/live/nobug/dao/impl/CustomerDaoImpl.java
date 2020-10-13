@@ -42,4 +42,17 @@ public class CustomerDaoImpl implements CustomerDao {
         template.update(sql, customer.getName(), customer.getGender(), customer.getAge(), customer.getAddress(), customer.getQq(), customer.getEmail(), customer.getId());
     }
 
+    @Override
+    public int totalCount() {
+        String sql = "select count(id) from customer";
+        return template.queryForObject(sql, Integer.class);
+    }
+
+    @Override
+    public List<Customer> findByPage(int startIndex, int rowsPerPage) {
+        String sql = "select * from customer limit ? , ?";
+        List<Customer> customers = template.query(sql, new BeanPropertyRowMapper<>(Customer.class), startIndex, rowsPerPage);
+        return customers;
+    }
+
 }
