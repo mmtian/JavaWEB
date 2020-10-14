@@ -15,7 +15,7 @@ public interface CustomerDao {
 
     void update(Customer customer);
 
-    int totalCount();
+    int totalCount(String name, String address, String email);
 
-    List<Customer> findByPage(int startIndex, int rowsPerPage);
+    List<Customer> findByCondition(int startIndex, int rowsPerPage, String name, String address, String email);
 }

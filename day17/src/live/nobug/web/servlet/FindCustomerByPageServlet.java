@@ -11,17 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet("/findCustomerByPage")
 public class FindCustomerByPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String currentPage = request.getParameter("currentPage");
-        String rowsPerPage = request.getParameter("rowsPerPage");
+        request.setCharacterEncoding("utf-8");
+
+        Map<String, String[]> condition = request.getParameterMap();
 
         CustomerService service = new CustomerServiceImpl();
-        PageBean<Customer> customerPage = service.findCustomerByPage(currentPage, rowsPerPage);
+        PageBean<Customer> customerPage = service.findCustomerByPage(condition);
 
-        request.setAttribute("customerPage", currentPage);
+        request.setAttribute("customerPage", customerPage);
+        request.setAttribute("condition", condition);
         request.getRequestDispatcher("/list.jsp").forward(request, response);
     }
 

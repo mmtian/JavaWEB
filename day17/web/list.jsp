@@ -31,17 +31,23 @@
 
         window.onload = function () {
             document.getElementById("delSelected").onclick = function () {
-                if(confirm("您确定要删除选中的所有用户吗？")){
+                if (confirm("您确定要删除选中的所有用户吗？")) {
                     document.getElementById("delForm").submit();
                 }
             }
 
-            document.getElementById("header-checkbox").onclick = function (){
+            document.getElementById("header-checkbox").onclick = function () {
                 let ths = document.getElementsByName("uid");
                 for (let i = 0; i < ths.length; i++) {
                     ths[i].checked = this.checked;
                 }
             }
+        }
+
+        function findCustomerByPage(currentPage, rowsPerPage){
+            document.getElementById("currentPage").value = currentPage;
+            document.getElementById("rowsPerPage").value = rowsPerPage;
+            document.getElementById("top-form").submit();
         }
     </script>
     <style type="text/css">
@@ -68,18 +74,20 @@
 <div class="container">
     <h3 style="text-align: center">用户信息列表</h3>
     <div class="top-form">
-        <form class="form-inline">
+        <form id="top-form" class="form-inline" action="${pageContext.request.contextPath}/findCustomerByPage" method="get">
+            <input id="currentPage" type="hidden" name="currentPage" value="1">
+            <input id="rowsPerPage" type="hidden" name="rowsPerPage" value="5">
             <div class="form-group">
                 <label for="name">姓名</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <input type="text" class="form-control" id="name" name="name" value="${condition.name[0]}">
             </div>
             <div class="form-group">
                 <label for="address">籍贯</label>
-                <input type="text" class="form-control" id="address" name="address">
+                <input type="text" class="form-control" id="address" name="address" value="${condition.address[0]}">
             </div>
             <div class="form-group">
                 <label for="email">邮箱</label>
-                <input type="email" class="form-control" id="email" name="email">
+                <input type="email" class="form-control" id="email" name="email" value="${condition.email[0]}">
             </div>
             <button type="submit" class="btn btn-default">查询</button>
         </form>
@@ -101,7 +109,7 @@
                 <th>邮箱</th>
                 <th>操作</th>
             </tr>
-            <c:forEach items="${customers}" var="customer" varStatus="s">
+            <c:forEach items="${customerPage.list}" var="customer" varStatus="s">
                 <tr>
                     <td><input type="checkbox" name="uid" value="${customer.id}"></td>
                     <td>${s.count}</td>
@@ -112,7 +120,8 @@
                     <td>${customer.qq}</td>
                     <td>${customer.email}</td>
                     <td>
-                        <a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/editCustomer?id=${customer.id}">修改</a>&nbsp;
+                        <a class="btn btn-default btn-sm"
+                           href="${pageContext.request.contextPath}/editCustomer?id=${customer.id}">修改</a>&nbsp;
                         <a class="btn btn-default btn-sm" href="javascript:deleteById(${customer.id});">删除</a></td>
                 </tr>
             </c:forEach>
@@ -122,22 +131,48 @@
     <div>
         <nav aria-label="Page navigation">
             <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                <span class="label-pagination">共16条，4页</span>
+                <c:if test="${customerPage.currentPage <= 1}">
+                    <li class="disabled">
+                        <a href="javascript:void(0);" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:if test="${customerPage.currentPage > 1}">
+                    <li>
+                        <a href="javascript:findCustomerByPage(${customerPage.currentPage-1}, 5);" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:forEach begin="1" end="${customerPage.totalPage}" var="i">
+                    <c:if test="${customerPage.currentPage == i}">
+                        <li class="active">
+                            <a href="javascript:findCustomerByPage(${i}, 5);">${i}</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${customerPage.currentPage != i}">
+                        <li>
+                            <a href="javascript:findCustomerByPage(${i}, 5);">${i}</a>
+                        </li>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${customerPage.currentPage >= customerPage.totalPage}">
+                    <li class="disabled">
+                        <a href="javascript:void(0);" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:if test="${customerPage.currentPage < customerPage.totalPage}">
+                    <li>
+                        <a href="javascript:findCustomerByPage(${customerPage.currentPage+1}, 5);"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <span class="label-pagination">共${customerPage.totalCount}条，${customerPage.totalPage}页</span>
             </ul>
         </nav>
     </div>

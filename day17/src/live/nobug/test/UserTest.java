@@ -22,10 +22,4 @@ public class UserTest {
 
     }
 
-    @Test
-    public void test2(){
-        CustomerService service = new CustomerServiceImpl();
-        PageBean<Customer> pageBean = service.findCustomerByPage("1", "10");
-        System.out.println(pageBean);
-    }
 }

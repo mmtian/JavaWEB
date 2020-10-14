@@ -4,6 +4,7 @@ import live.nobug.domain.Customer;
 import live.nobug.domain.PageBean;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CustomerService {
     List<Customer> findAll();
@@ -18,5 +19,5 @@ public interface CustomerService {
 
     void delSelected(String[] ids);
 
-    PageBean<Customer> findCustomerByPage(String currentPage, String rowsPerPage);
+    PageBean<Customer> findCustomerByPage(Map<String, String[]> condition);
 }

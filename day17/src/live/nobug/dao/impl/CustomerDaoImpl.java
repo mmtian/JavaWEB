@@ -43,15 +43,23 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public int totalCount() {
-        String sql = "select count(id) from customer";
-        return template.queryForObject(sql, Integer.class);
+    public int totalCount(String name, String address, String email) {
+        name = "%" + name + "%";
+        address = "%" + address + "%";
+        email = "%" + email + "%";
+
+        String sql = "select count(id) from customer where name like ? and address like ? and email like ?";
+        return template.queryForObject(sql, Integer.class, name, address, email);
     }
 
     @Override
-    public List<Customer> findByPage(int startIndex, int rowsPerPage) {
-        String sql = "select * from customer limit ? , ?";
-        List<Customer> customers = template.query(sql, new BeanPropertyRowMapper<>(Customer.class), startIndex, rowsPerPage);
+    public List<Customer> findByCondition(int startIndex, int rowsPerPage, String name, String address, String email) {
+        name = "%" + name + "%";
+        address = "%" + address + "%";
+        email = "%" + email + "%";
+
+        String sql = "select * from customer where name like ? and address like ? and email like ? limit ? , ?";
+        List<Customer> customers = template.query(sql, new BeanPropertyRowMapper<>(Customer.class), name, address, email, startIndex, rowsPerPage);
         return customers;
     }
 

@@ -32,7 +32,7 @@ public class UpdateCustomerServlet extends HttpServlet {
         CustomerService service = new CustomerServiceImpl();
         service.updateCustomer(customer);
 
-        response.sendRedirect(request.getContextPath()+"/customerListServlet");
+        response.sendRedirect(request.getContextPath()+"/findCustomerByPage");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
